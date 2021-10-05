@@ -1,7 +1,7 @@
-package training.proj.mobilele.entities;
+package training.proj.mobilele.models.entities;
 
 
-import training.proj.mobilele.entities.enums.ModelCategory;
+import training.proj.mobilele.models.entities.enums.ModelCategory;
 
 import javax.persistence.*;
 
@@ -17,9 +17,9 @@ public class ModelEntity extends BaseEntity {
     @Column(length = 512)
     private String imageUrl;
 
-    private int startYear;
+    private Integer startYear;
 
-    private int endYear;
+    private Integer endYear;
 
     @ManyToOne
     private BrandEntity brand;
@@ -51,20 +51,20 @@ public class ModelEntity extends BaseEntity {
         return this;
     }
 
-    public int getStartYear() {
+    public Integer getStartYear() {
         return startYear;
     }
 
-    public ModelEntity setStartYear(int startYear) {
+    public ModelEntity setStartYear(Integer startYear) {
         this.startYear = startYear;
         return this;
     }
 
-    public int getEndYear() {
+    public Integer getEndYear() {
         return endYear;
     }
 
-    public ModelEntity setEndYear(int endYear) {
+    public ModelEntity setEndYear(Integer endYear) {
         this.endYear = endYear;
         return this;
     }

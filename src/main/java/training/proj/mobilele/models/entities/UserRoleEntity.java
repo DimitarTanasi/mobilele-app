@@ -1,6 +1,6 @@
-package training.proj.mobilele.entities;
+package training.proj.mobilele.models.entities;
 
-import training.proj.mobilele.entities.enums.UserRoleEnum;
+import training.proj.mobilele.models.entities.enums.UserRoleEnum;
 
 import javax.persistence.*;
 

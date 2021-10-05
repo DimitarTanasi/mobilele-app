@@ -1,4 +1,4 @@
-package training.proj.mobilele.entities.enums;
+package training.proj.mobilele.models.entities.enums;
 
 public enum ModelCategory {
     CAR,

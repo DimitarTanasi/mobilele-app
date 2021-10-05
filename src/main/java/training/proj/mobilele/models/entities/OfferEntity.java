@@ -1,7 +1,7 @@
-package training.proj.mobilele.entities;
+package training.proj.mobilele.models.entities;
 
-import training.proj.mobilele.entities.enums.EngineEnum;
-import training.proj.mobilele.entities.enums.TransmissionEnum;
+import training.proj.mobilele.models.entities.enums.EngineEnum;
+import training.proj.mobilele.models.entities.enums.TransmissionEnum;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

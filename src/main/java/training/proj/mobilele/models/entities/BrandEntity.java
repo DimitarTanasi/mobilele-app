@@ -1,7 +1,6 @@
-package training.proj.mobilele.entities;
+package training.proj.mobilele.models.entities;
 
 import javax.persistence.*;
-import java.time.Instant;
 
 @Entity
 @Table(name = "brands")

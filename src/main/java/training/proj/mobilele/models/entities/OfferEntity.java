@@ -30,8 +30,10 @@ public class OfferEntity extends BaseEntity {
     @ManyToOne
     private ModelEntity model;
 
-    @ManyToOne
-    private UserEntity user;
+    //TODO:Uncomment when start implement user's functionality
+
+//    @ManyToOne
+//    private UserEntity user;
 
     public String getDescription() {
         return description;
@@ -105,14 +107,14 @@ public class OfferEntity extends BaseEntity {
         return this;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public OfferEntity setUser(UserEntity user) {
-        this.user = user;
-        return this;
-    }
+//    public UserEntity getUser() {
+//        return user;
+//    }
+//
+//    public OfferEntity setUser(UserEntity user) {
+//        this.user = user;
+//        return this;
+//    }
 
     @Override
     public String toString() {
@@ -128,7 +130,7 @@ public class OfferEntity extends BaseEntity {
                 ", year=" + year +
                 ", transmission=" + transmission +
                 ", model=" + model +
-                ", user=" + user +
+               // ", user=" + user +
                 '}';
     }
 }

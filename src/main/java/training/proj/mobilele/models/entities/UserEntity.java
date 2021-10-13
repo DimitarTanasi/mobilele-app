@@ -8,10 +8,11 @@ import java.util.List;
 public class UserEntity extends BaseEntity{
 
     private String username;
+    private String password;
     private String firstName;
     private String LastName;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRoleEntity> userRoles;
 
     private String imageUrl;
@@ -24,6 +25,15 @@ public class UserEntity extends BaseEntity{
 
     public UserEntity setUsername(String username) {
         this.username = username;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
         return this;
     }
 

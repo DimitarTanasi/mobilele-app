@@ -1,17 +1,14 @@
 package training.proj.mobilele;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import training.proj.mobilele.models.entities.BaseEntity;
-import training.proj.mobilele.models.entities.BrandEntity;
-import training.proj.mobilele.models.entities.ModelEntity;
-import training.proj.mobilele.models.entities.OfferEntity;
+import training.proj.mobilele.models.entities.*;
 import training.proj.mobilele.models.entities.enums.EngineEnum;
 import training.proj.mobilele.models.entities.enums.ModelCategory;
 import training.proj.mobilele.models.entities.enums.TransmissionEnum;
-import training.proj.mobilele.repositories.BrandRepository;
-import training.proj.mobilele.repositories.ModelRepository;
-import training.proj.mobilele.repositories.OfferRepository;
+import training.proj.mobilele.models.entities.enums.UserRoleEnum;
+import training.proj.mobilele.repositories.*;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -24,12 +21,18 @@ public class DbInit implements CommandLineRunner {
     private final ModelRepository modelRepository;
     private final BrandRepository brandRepository;
     private final OfferRepository offerRepository;
+    private final UserRoleRepository userRoleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     public DbInit(ModelRepository modelRepository,
-                  BrandRepository brandRepository, OfferRepository offerRepository) {
+                  BrandRepository brandRepository, OfferRepository offerRepository, UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.modelRepository = modelRepository;
         this.brandRepository = brandRepository;
         this.offerRepository = offerRepository;
+        this.userRoleRepository = userRoleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -83,6 +86,39 @@ public class DbInit implements CommandLineRunner {
         setCurrentTimestamps(fiestaOffer);
         offerRepository.save(fiestaOffer);
 
+        seedUsersWithUserRoles();
+
+    }
+
+    private void seedUsersWithUserRoles(){
+        if (userRoleRepository.count()==0) {
+
+            UserRoleEntity adminRole = new UserRoleEntity().setRole(UserRoleEnum.ADMIN);
+            UserRoleEntity userRole = new UserRoleEntity().setRole(UserRoleEnum.USER);
+
+            userRoleRepository.saveAll(List.of(adminRole, userRole));
+
+            UserEntity adminUser = new UserEntity();
+            adminUser
+                    .setFirstName("Tony")
+                    .setLastName("Stark")
+                    .setUsername("ironman")
+                    .setPassword(passwordEncoder.encode("endgame"))
+                    .setUserRoles(List.of(adminRole, userRole));
+            UserEntity regularUser = new UserEntity();
+            regularUser
+                    .setFirstName("Natasha")
+                    .setLastName("Romanoff")
+                    .setUsername("Black-Widow")
+                    .setPassword(passwordEncoder.encode("redroom"))
+                    .setUserRoles(List.of(userRole));
+
+            setCurrentTimestamps(adminUser);
+            setCurrentTimestamps(regularUser);
+            userRepository.saveAll(List.of(adminUser,regularUser));
+
+        }
+
     }
 
     private static void setCurrentTimestamps(BaseEntity baseEntity){
@@ -90,17 +126,5 @@ public class DbInit implements CommandLineRunner {
         baseEntity.setUpdated(Instant.now());
 
     }
-//    private void createFiestaOffer(ModelEntity model) {
-//
-//        OfferEntity fiestaOffer = new OfferEntity();
-//        fiestaOffer.setEngine(EngineEnum.DIESEL)
-//                .setImageUrl("https://media.autoexpress.co.uk/image/private/s--aTV0y29z--/v1562244738/autoexpress/2017/07/1fordfiestadiesel.jpg")
-//                .setMileage(80000)
-//                .setPrice(BigDecimal.valueOf(20000))
-//                .setYear(2017)
-//                .setDescription("Kachvash se i karash :)")
-//                .setTransmission(TransmissionEnum.MANUAL)
-//                .setModel(model);
-//        offerRepository.save(fiestaOffer);
-//    }
+
 }
